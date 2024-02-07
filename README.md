@@ -46,7 +46,7 @@ go version
 
 ### Download and build binaries
 ```
-MONIKER="YOUR_MONIKER_GOES_HERE"
+MONIKER="YOUR MONIKER"
 cd $HOME
 rm -rf babylon
 git clone https://github.com/babylonchain/babylon.git
