@@ -54,29 +54,29 @@ cd babylon
 git checkout v0.7.2
 ```
 
-# Build binaries
+### Build binaries
 ```
 make build
 ```
-# Prepare binaries for Cosmovisor
+### Prepare binaries for Cosmovisor
 ```
 mkdir -p $HOME/.babylond/cosmovisor/genesis/bin
 mv build/babylond $HOME/.babylond/cosmovisor/genesis/bin/
 rm -rf build
 ```
 
-# Create application symlinks
+### Create application symlinks
 ```
 sudo ln -s $HOME/.babylond/cosmovisor/genesis $HOME/.babylond/cosmovisor/current -f
 sudo ln -s $HOME/.babylond/cosmovisor/current/bin/babylond /usr/local/bin/babylond -f
 ```
 
-# Download and install Cosmovisor
+### Download and install Cosmovisor
 ```
 go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@v1.5.0
 ```
 
-# Create service
+### Create service
 ```
 sudo tee /etc/systemd/system/babylon.service > /dev/null << EOF
 [Unit]
@@ -104,35 +104,35 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable babylon.service
 ```
-# Set node configuration
+### Set node configuration
 ```
 babylond config chain-id bbn-test-2
 babylond config keyring-backend test
 babylond config node tcp://localhost:16457
 ```
 
-# Initialize the node
+### Initialize the node
 ```
 babylond init $MONIKER --chain-id bbn-test-2
 ```
 
-# Download genesis and addrbook
+### Download genesis and addrbook
 ```
 curl -Ls https://snapshots.kjnodes.com/babylon-testnet/genesis.json > $HOME/.babylond/config/genesis.json
 curl -Ls https://snapshots.kjnodes.com/babylon-testnet/addrbook.json > $HOME/.babylond/config/addrbook.json
 ```
 
-# Add seeds
+### Add seeds
 ```
 sed -i -e "s|^seeds *=.*|seeds = \"3f472746f46493309650e5a033076689996c8881@babylon-testnet.rpc.kjnodes.com:16459\"|" $HOME/.babylond/config/config.toml
 ```
 
-# Set minimum gas price
+### Set minimum gas price
 ```
 sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"0.00001ubbn\"|" $HOME/.babylond/config/app.toml
 ```
 
-# Set pruning
+### Set pruning
 ```
 sed -i \
   -e 's|^pruning *=.*|pruning = "custom"|' \
@@ -142,19 +142,19 @@ sed -i \
   $HOME/.babylond/config/app.toml
 ```
 
-# Set custom ports
+### Set custom ports
 ```
 sed -i -e "s%^proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:16458\"%; s%^laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://127.0.0.1:16457\"%; s%^pprof_laddr = \"localhost:6060\"%pprof_laddr = \"localhost:16460\"%; s%^laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:16456\"%; s%^prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":16466\"%" $HOME/.babylond/config/config.toml
 sed -i -e "s%^address = \"tcp://localhost:1317\"%address = \"tcp://0.0.0.0:16417\"%; s%^address = \":8080\"%address = \":16480\"%; s%^address = \"localhost:9090\"%address = \"0.0.0.0:16490\"%; s%^address = \"localhost:9091\"%address = \"0.0.0.0:16491\"%; s%:8545%:16445%; s%:8546%:16446%; s%:6065%:16465%" $HOME/.babylond/config/app.toml
 ```
 
-# Download latest chain snapshot
+### Download latest chain snapshot
 ```
 curl -L https://snapshots.kjnodes.com/babylon-testnet/snapshot_latest.tar.lz4 | tar -Ilz4 -xf - -C $HOME/.babylond
 [[ -f $HOME/.babylond/data/upgrade-info.json ]] && cp $HOME/.babylond/data/upgrade-info.json $HOME/.babylond/cosmovisor/genesis/upgrade-info.json
 ```
 
-# Start service and check the logs
+### Start service and check the logs
 ```
 sudo systemctl start babylon.service && sudo journalctl -u babylon.service -f --no-hostname -o cat
 ```
@@ -171,12 +171,12 @@ babylond keys add wallet
 babylond keys add wallet --recover
 ```
 
-# We receive tokens from the tap in the [discord](https://discord.gg/babylonglobal)
+### We receive tokens from the tap in the [discord](https://discord.gg/babylonglobal)
 ```
 In the #get-a-role branch, you get all possible roles, then go to the #faucet branch and write!faucet your babylon address(bbn....)
 ```
 
-# Create a BLS key
+### Create a BLS key
 Validators are expected to submit a BLS signature at the end of each epoch. To do that, a validator needs to have a BLS key pair to sign information with.
 
 Using the address that you created on the previous step.
@@ -190,7 +190,7 @@ After creating a BLS key, you need to restart your node to load this key into me
 sudo systemctl restart babylon.service
 ```
 
-# Modify the Configuration
+### Modify the Configuration
 
 Furthermore, you need to specify the name of the key that the validator will be using to submit BLS signature transactions under the $HOME/.babylond/config/app.toml file. Edit this file and set the key name to the one that holds funds on your keyring:
 ```
@@ -201,7 +201,7 @@ Finally, it is strongly recommended to modify the timeout_commit value under $HO
 sed -i -e "s|^timeout_commit *=.*|timeout_commit = \"10s\"|" $HOME/.babylond/config/config.toml
 ```
 
-# Create the Validator
+### Create the Validator
 
 Before creating a validator, enter the command and check that you have false. This means that the Node has synchronized and you can create a validator:
 ```
