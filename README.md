@@ -23,7 +23,7 @@ Running as a Provider? Add these specific ports: </br>
 
 ### Installing the Babylon Node
 
-1. Preparing the server/Required packages installation</br>.
+1. Preparing the server/Required packages installation</br>
 ```
 sudo apt update
 sudo apt upgrade -y
