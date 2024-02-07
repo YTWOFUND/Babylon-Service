@@ -30,9 +30,7 @@ sudo apt upgrade -y
 sudo apt-get install libclang-dev
 sudo apt install -y unzip logrotate git jq sed wget curl coreutils systemd
 ```
-```
-Go installation.
-```
+# Go installation.
 ```
 cd $HOME
 curl https://dl.google.com/go/go1.20.1.linux-amd64.tar.gz | sudo tar -C/usr/local -zxvf -
