@@ -5,10 +5,13 @@
 [Official documentation](https://docs.babylonchain.io/docs/introduction/overview)
 
 System requirements:</br>
-CPU: 4 Core</br>
-RAM: 8 Gb</br>
-SSD: 160 Gb</br>
+CPU: Quad Core or larger AMD or Intel (amd64) CPU
+RAM:32GB RAM
+SSD:1TB NVMe Storage
+100MBps bidirectional internet connection
 OS: Ubuntu 20.04 or 22.04</br>
+
+You can take a weaker server
 
 ### Network configurations: </br>
 Outbound - allow all traffic </br>
@@ -32,15 +35,10 @@ sudo apt install -y unzip logrotate git jq sed wget curl coreutils systemd
 ```
 ### Go installation.
 ```
-cd $HOME
-curl https://dl.google.com/go/go1.20.1.linux-amd64.tar.gz | sudo tar -C/usr/local -zxvf -
-cat <<'EOF' >>$HOME/.profile
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
-export GO111MODULE=on
-export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
-EOF
-source $HOME/.profile
+sudo rm -rf /usr/local/go
+curl -L https://go.dev/dl/go1.21.6.linux-amd64.tar.gz | sudo tar -xzf - -C /usr/local
+echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bash_profile
+source .bash_profile
 go version
 ```
 
@@ -51,7 +49,7 @@ cd $HOME
 rm -rf babylon
 git clone https://github.com/babylonchain/babylon.git
 cd babylon
-git checkout v0.7.2
+git checkout v0.8.3
 ```
 
 ### Build binaries
@@ -106,14 +104,14 @@ sudo systemctl enable babylon.service
 ```
 ### Set node configuration
 ```
-babylond config chain-id bbn-test-2
+babylond config chain-id bbn-test-3
 babylond config keyring-backend test
 babylond config node tcp://localhost:16457
 ```
 
 ### Initialize the node
 ```
-babylond init $MONIKER --chain-id bbn-test-2
+babylond init $MONIKER --chain-id bbn-test-3
 ```
 
 ### Download genesis and addrbook
@@ -231,10 +229,12 @@ babylond tx checkpointing create-validator \
 
 ### Update
 ```
-There have been no updates at the moment, as soon as they come out, we will immediately add them to this section.
+sudo systemctl stop babylon.service
 
-Current network:bbn-test-2
-Current version:v0.7.2
+and we are doing the steps above again since the network is new
+
+Current network:bbn-test-3
+Current version:v0.8.3
 ```
 
 ### Useful commands
