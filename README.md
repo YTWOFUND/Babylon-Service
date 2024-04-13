@@ -49,7 +49,7 @@ cd $HOME
 rm -rf babylon
 git clone https://github.com/babylonchain/babylon.git
 cd babylon
-git checkout v0.8.3
+git checkout v0.8.4
 ```
 
 ### Build binaries
@@ -234,7 +234,7 @@ sudo systemctl stop babylon.service
 and we are doing the steps above again since the network is new
 
 Current network:bbn-test-3
-Current version:v0.8.3
+Current version:v0.8.4
 ```
 
 ### Useful commands
