@@ -1,6 +1,6 @@
 # Babylon-Service
 
-NETWORK STOP!
+NETWORK STOP! GUIDE NO WORK!
 
 ### Babylon node Installation Instructions.
 
